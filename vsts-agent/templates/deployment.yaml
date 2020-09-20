@@ -1,14 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: { { template "fullname" . } }
+  name: {{ template "fullname" . }}
 spec:
-  replicas: { { .Values.replicaCount } }
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "name" . }}
+      release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: { { template "name" . } }
-        release: { { .Release.Name } }
+        app: {{ template "name" . }}
+        release: {{ .Release.Name }}
         version: "0.1"
     spec:
       containers:
