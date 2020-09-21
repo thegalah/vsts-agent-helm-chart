@@ -39,19 +39,10 @@ spec:
           volumeMounts:
             - mountPath: /var/run/docker.sock
               name: docker-volume
+            - mountPath: /workspace
+              name: workspace
       volumes:
         - name: docker-volume
           hostPath:
             path: /var/run/docker.sock
-        volumeMounts:
-          - name: workspace
-            mountPath: /workspace
-  volumeClaimTemplates:
-  - metadata:
-      name: workspace
-    spec:
-      accessModes: [ ReadWriteOnce ]
-      storageClassName: default
-      resources:
-        requests:
-          storage: 20Gi
+        - name: workspace
