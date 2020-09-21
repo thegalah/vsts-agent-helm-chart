@@ -46,3 +46,5 @@ spec:
           hostPath:
             path: /var/run/docker.sock
         - name: workspace
+          persistentVolumeClaim:
+            claimName: workspace
