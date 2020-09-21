@@ -34,6 +34,8 @@ spec:
                 secretKeyRef:
                   name: vsts-agent-secret
                   key: pool
+            - name: VSTS_WORK
+              value: /workspace
           volumeMounts:
             - mountPath: /var/run/docker.sock
               name: docker-volume
@@ -41,3 +43,15 @@ spec:
         - name: docker-volume
           hostPath:
             path: /var/run/docker.sock
+        volumeMounts:
+          - name: workspace
+            mountPath: /workspace
+  volumeClaimTemplates:
+  - metadata:
+      name: workspace
+    spec:
+      accessModes: [ ReadWriteOnce ]
+      storageClassName: default
+      resources:
+        requests:
+          storage: 20Gi
