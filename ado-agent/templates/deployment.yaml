@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: vsts-agent
-          image: docker.io/thegalah/ado-agent:latest
+          image: docker.io/thegalah/ado-agent:dind
           env:
             - name: AZP_URL
               valueFrom:
