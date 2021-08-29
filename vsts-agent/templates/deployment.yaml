@@ -19,21 +19,21 @@ spec:
         - name: vsts-agent
           image: docker.io/thegalah/ado-agent:latest
           env:
-            - name: VSTS_ACCOUNT
+            - name: AZP_URL
               valueFrom:
                 secretKeyRef:
-                  name: vsts-agent-secret
-                  key: account
-            - name: VSTS_TOKEN
+                  name: ado-agent-secret
+                  key: azp_url
+            - name: AZP_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: vsts-agent-secret
-                  key: token
-            - name: VSTS_POOL
+                  name: ado-agent-secret
+                  key: azp_token
+            - name: AZP_POOL
               valueFrom:
                 secretKeyRef:
-                  name: vsts-agent-secret
-                  key: pool
+                  name: ado-agent-secret
+                  key: azp_pool
             - name: VSTS_WORK
               value: /workspace
           volumeMounts:
