@@ -3,9 +3,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: workspace
 spec:
+  storageClassName: premium-rwo
   accessModes:
-  - ReadWriteOnce
-  storageClassName: managed-premium
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
+      storage: 30Gi
