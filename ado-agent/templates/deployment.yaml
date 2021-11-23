@@ -16,6 +16,16 @@ spec:
         version: "0.1"
     spec:
       containers:
+        - name: docker-daemon
+          image: docker:20-dind
+          securityContext:
+            privileged: true
+          env:
+            - name: DOCKER_TLS_CERTDIR
+              value: ""
+          volumeMounts:
+            - mountPath: /var/lib/docker
+              name: docker-graph-storage
         - name: vsts-agent
           image: docker.io/thegalah/ado-agent:dind
           env:
@@ -36,15 +46,14 @@ spec:
                   key: azp_pool
             - name: VSTS_WORK
               value: /workspace
+            - name: DOCKER_HOST
+              value: tcp://0.0.0.0:2375
           volumeMounts:
-            - mountPath: /var/run/docker.sock
-              name: docker-volume
             - mountPath: /workspace
               name: workspace
       volumes:
-        - name: docker-volume
-          hostPath:
-            path: /var/run/docker.sock
+        - name: docker-graph-storage
+          emptyDir: {}
         - name: workspace
           persistentVolumeClaim:
             claimName: workspace
