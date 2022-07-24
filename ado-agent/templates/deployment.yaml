@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{template "fullname" .}}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{.Values.replicaCount}}
   selector:
     matchLabels:
-      app: {{ template "name" . }}
-      release: {{ .Release.Name }}
+      app: {{template "name" .}}
+      release: {{.Release.Name}}
   template:
     metadata:
       labels:
-        app: {{ template "name" . }}
-        release: {{ .Release.Name }}
-        version: "0.1"
+        app: {{template "name" .}}
+        release: {{.Release.Name}}
+        version: '0.1'
     spec:
       containers:
         - name: docker-daemon
@@ -22,12 +22,16 @@ spec:
             privileged: true
           env:
             - name: DOCKER_TLS_CERTDIR
-              value: ""
+              value: ''
           volumeMounts:
             - mountPath: /var/lib/docker
               name: docker-graph-storage
         - name: vsts-agent
           image: docker.io/thegalah/ado-agent:dind
+          resources:
+            requests:
+              memory: '8192Mi'
+              cpu: '2000m'
           env:
             - name: AZP_URL
               valueFrom:
